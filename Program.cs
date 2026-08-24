@@ -144,8 +144,8 @@ class Program
                 }
             }
 
-            // Exclusively generate PDF Report with trend charts & delta indicators
-            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf, trends, trendChartBytes);
+            // Exclusively generate PDF Report with trend charts at the end
+            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf, trendChartBytes);
 
             if (records.Count > 0)
             {

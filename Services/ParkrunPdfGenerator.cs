@@ -20,7 +20,6 @@ public class ParkrunPdfGenerator
         ConsolidatedReportMetadata meta,
         List<ParkrunRecord> records,
         string outputPath,
-        TrendComparison? trends = null,
         byte[]? trendChartBytes = null)
     {
         string fullPath = ParkrunScraperService.ResolvePath(outputPath);
@@ -74,7 +73,7 @@ public class ParkrunPdfGenerator
                         });
                     });
 
-                    // Summary Stats Badges with Week-over-Week Trend Indicators
+                    // Summary Stats Badges
                     column.Item().PaddingTop(8).PaddingBottom(6).Row(statRow =>
                     {
                         statRow.Spacing(10);
@@ -83,52 +82,22 @@ public class ParkrunPdfGenerator
                         statRow.RelativeItem().Background(Colors.Indigo.Lighten5).Border(1).BorderColor(Colors.Indigo.Lighten3).Padding(8).Column(c =>
                         {
                             c.Item().Text("Total Club Runners").FontSize(8).FontColor(Colors.Indigo.Darken2).SemiBold();
-                            c.Item().Row(r =>
-                            {
-                                r.RelativeItem().Text($"{totalRunners}").FontSize(14).Bold().FontColor(Colors.Indigo.Darken4);
-                                if (trends != null && trends.HasPreviousRunners)
-                                {
-                                    string deltaText = trends.RunnersDelta > 0 ? $"+{trends.RunnersDelta}" : $"{trends.RunnersDelta}";
-                                    string symbol = trends.RunnersDelta > 0 ? "▲" : (trends.RunnersDelta < 0 ? "▼" : "—");
-                                    string deltaColor = trends.RunnersDelta > 0 ? Colors.Green.Darken2 : (trends.RunnersDelta < 0 ? Colors.Red.Darken2 : Colors.Grey.Darken1);
-                                    r.AutoItem().AlignBottom().Text($"{symbol} {deltaText} vs last wk").FontSize(7.5f).Bold().FontColor(deltaColor);
-                                }
-                            });
+                            c.Item().Text($"{totalRunners}").FontSize(14).Bold().FontColor(Colors.Indigo.Darken4);
                         });
 
                         // Card 2: Events
                         statRow.RelativeItem().Background(Colors.Teal.Lighten5).Border(1).BorderColor(Colors.Teal.Lighten3).Padding(8).Column(c =>
                         {
                             c.Item().Text("Events Attended").FontSize(8).FontColor(Colors.Teal.Darken2).SemiBold();
-                            c.Item().Row(r =>
-                            {
-                                r.RelativeItem().Text($"{totalEvents}").FontSize(14).Bold().FontColor(Colors.Teal.Darken4);
-                                if (trends != null && trends.HasPreviousEvents)
-                                {
-                                    string deltaText = trends.EventsDelta > 0 ? $"+{trends.EventsDelta}" : $"{trends.EventsDelta}";
-                                    string symbol = trends.EventsDelta > 0 ? "▲" : (trends.EventsDelta < 0 ? "▼" : "—");
-                                    string deltaColor = trends.EventsDelta > 0 ? Colors.Green.Darken2 : (trends.EventsDelta < 0 ? Colors.Red.Darken2 : Colors.Grey.Darken1);
-                                    r.AutoItem().AlignBottom().Text($"{symbol} {deltaText} vs last wk").FontSize(7.5f).Bold().FontColor(deltaColor);
-                                }
-                            });
+                            c.Item().Text($"{totalEvents}").FontSize(14).Bold().FontColor(Colors.Teal.Darken4);
                         });
 
                         // Card 3: Registered Members
                         statRow.RelativeItem().Background(Colors.Orange.Lighten5).Border(1).BorderColor(Colors.Orange.Lighten3).Padding(8).Column(c =>
                         {
                             c.Item().Text("Club Members Reg.").FontSize(8).FontColor(Colors.Orange.Darken2).SemiBold();
-                            c.Item().Row(r =>
-                            {
-                                string memberStr = string.IsNullOrEmpty(meta.TotalMembers) ? "N/A" : meta.TotalMembers;
-                                r.RelativeItem().Text(memberStr).FontSize(14).Bold().FontColor(Colors.Orange.Darken4);
-                                if (trends != null && trends.HasPreviousMembers)
-                                {
-                                    string deltaText = trends.MembersDelta > 0 ? $"+{trends.MembersDelta}" : $"{trends.MembersDelta}";
-                                    string symbol = trends.MembersDelta > 0 ? "▲" : (trends.MembersDelta < 0 ? "▼" : "—");
-                                    string deltaColor = trends.MembersDelta > 0 ? Colors.Green.Darken2 : (trends.MembersDelta < 0 ? Colors.Red.Darken2 : Colors.Grey.Darken1);
-                                    r.AutoItem().AlignBottom().Text($"{symbol} {deltaText}").FontSize(7.5f).Bold().FontColor(deltaColor);
-                                }
-                            });
+                            string memberStr = string.IsNullOrEmpty(meta.TotalMembers) ? "N/A" : meta.TotalMembers;
+                            c.Item().Text(memberStr).FontSize(14).Bold().FontColor(Colors.Orange.Darken4);
                         });
                     });
 
