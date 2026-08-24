@@ -1,29 +1,32 @@
 # Parkrun Consolidated Club Results Scraper (.NET 9 / C#)
 
-A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for **Birmingham Swifts (Club #21925)** (or any other club) and exports the data into a single CSV file directly in your `~/Downloads` folder.
+A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for **Birmingham Swifts (Club #21925)** (or any other club) and automatically generates a styled **PDF report** directly in your `~/Downloads` folder.
 
 ---
 
 ## Features
 
 - **Worldwide Coverage**: Extracts all parkruns attended by Birmingham Swifts members worldwide for a given week.
-- **Detailed Extracted Fields**:
-  - `Event Date`
-  - `Club Name`
+- **PDF Report Layout**:
+  - Club Header with dynamic branding and date subtitle.
+  - Summary metrics cards (Total Club Runners, Events Attended, Total Registered Members).
+  - Multi-page responsive table with alternating row colors.
+  - Interactive profile links to parkrunner profiles.
+  - Running footer with page numbering and timestamp.
+- **Detailed Extracted Fields in Report**:
   - `Event Name` (e.g. *Edgbaston Reservoir parkrun*, *Cannon Hill parkrun*)
   - `Overall Position`
   - `Parkrunner` (Runner's Full Name)
-  - `Time` (Finish Time, formatted)
-  - `Event Total Participants`
-  - `Profile URL`
-- **Excel-Ready**: Writes UTF-8 with BOM (`utf-8-sig`) so names and finish times render cleanly in Microsoft Excel or Google Sheets.
-- **Fast & Modern**: Built on .NET 9 and `HtmlAgilityPack`.
+  - `Time` (Finish Time)
+  - `Event Finishers`
+  - `Profile Link`
+- **Fast & Modern**: Built on .NET 9, `HtmlAgilityPack`, and `QuestPDF`.
 
 ---
 
 ## Quick Start
 
-### 1. Run with default configuration (Birmingham Swifts - Club #21925):
+### 1. Run with default configuration (Generates PDF for Birmingham Swifts):
 ```bash
 dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper
 ```
@@ -33,10 +36,6 @@ Pass another club's numerical ID or full URL with `-c` or `--club`:
 ```bash
 dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 21925
 ```
-Or with full parkrun URL:
-```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club "https://www.parkrun.com/results/consolidatedclub/?clubNum=21925"
-```
 
 ### 3. Specifying a Historical Date:
 Extract results for a specific weekend event date (`YYYY-MM-DD`):
@@ -44,10 +43,10 @@ Extract results for a specific weekend event date (`YYYY-MM-DD`):
 dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --date 2026-08-22
 ```
 
-### 4. Overwriting a Single Constant CSV File:
-To overwrite a fixed single file (`~/Downloads/parkrun_consolidated_club_results.csv`) instead of date-stamped files:
+### 4. Also Exporting a CSV File:
+Pass `--csv` to generate both a PDF and a CSV file simultaneously:
 ```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --single-file
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --csv
 ```
 
 ---
@@ -60,8 +59,8 @@ Pre-configured for Birmingham Swifts in [appsettings.json](appsettings.json):
   "DefaultClubNum": "21925",
   "DefaultClubName": "Birmingham Swifts",
   "DownloadFolder": "~/Downloads",
-  "OutputFilenamePattern": "parkrun_consolidated_{0}_{1}.csv",
-  "SingleOutputFilename": "parkrun_consolidated_club_results.csv",
+  "OutputFilenamePattern": "parkrun_consolidated_{0}_{1}.pdf",
+  "SingleOutputFilename": "parkrun_consolidated_club_results.pdf",
   "OverwriteSingleFile": false
 }
 ```
@@ -74,7 +73,5 @@ This project is configured as its own independent Git repository. To push to Git
 
 ```bash
 cd /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper
-git remote add origin https://github.com/<YOUR_USERNAME>/<NEW_REPO_NAME>.git
-git branch -M main
-git push -u origin main
+git push origin main
 ```

@@ -24,11 +24,11 @@ class Program
             configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
         }
 
-        string defaultClubNum = "947";
-        string defaultClubName = "Ranelagh Harriers";
+        string defaultClubNum = "21925";
+        string defaultClubName = "Birmingham Swifts";
         string downloadFolder = "~/Downloads";
-        string outputPattern = "parkrun_consolidated_{0}_{1}.csv";
-        string singleOutputFilename = "parkrun_consolidated_club_results.csv";
+        string outputPattern = "parkrun_consolidated_{0}_{1}.pdf";
+        string singleOutputFilename = "parkrun_consolidated_club_results.pdf";
         bool overwriteSingleFile = false;
 
         if (File.Exists(configPath))
@@ -55,6 +55,7 @@ class Program
         string? eventDate = null;
         string? customOutput = null;
         bool singleFileFlag = overwriteSingleFile;
+        bool exportCsvAlso = false;
 
         for (int i = 0; i < args.Length; i++)
         {
@@ -74,6 +75,10 @@ class Program
             else if (arg.Equals("--single-file", StringComparison.OrdinalIgnoreCase))
             {
                 singleFileFlag = true;
+            }
+            else if (arg.Equals("--csv", StringComparison.OrdinalIgnoreCase))
+            {
+                exportCsvAlso = true;
             }
             else if (!arg.StartsWith("-"))
             {
@@ -101,28 +106,35 @@ class Program
             Console.WriteLine($"Distinct Events Attended:        {records.Select(r => r.EventName).Distinct().Count():N0}");
             Console.WriteLine($"Total Runner Records Parsed:     {records.Count:N0}\n");
 
-            string destinationCsv;
+            string destinationPdf;
             if (!string.IsNullOrEmpty(customOutput))
             {
-                destinationCsv = customOutput;
+                destinationPdf = customOutput;
             }
             else
             {
                 string resolvedDownloadDir = ParkrunScraperService.ResolvePath(downloadFolder);
                 if (singleFileFlag)
                 {
-                    destinationCsv = Path.Combine(resolvedDownloadDir, singleOutputFilename);
+                    destinationPdf = Path.Combine(resolvedDownloadDir, singleOutputFilename);
                 }
                 else
                 {
                     string slug = Regex.Replace(effectiveClubName, @"[^a-zA-Z0-9_-]", "_").Trim('_');
                     if (string.IsNullOrEmpty(slug)) slug = "Club";
                     string fileName = string.Format(outputPattern, slug, effectiveDate);
-                    destinationCsv = Path.Combine(resolvedDownloadDir, fileName);
+                    destinationPdf = Path.Combine(resolvedDownloadDir, fileName);
                 }
             }
 
-            ParkrunScraperService.SaveToCsv(records, destinationCsv);
+            // Generate PDF Report
+            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf);
+
+            if (exportCsvAlso)
+            {
+                string destinationCsv = Path.ChangeExtension(destinationPdf, ".csv");
+                ParkrunScraperService.SaveToCsv(records, destinationCsv);
+            }
 
             if (records.Count > 0)
             {
