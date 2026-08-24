@@ -191,8 +191,8 @@ public class ParkrunScraperService
         }
 
         var sb = new StringBuilder();
-        // Header
-        sb.AppendLine("Event Date,Club Name,Event Name,Event Number,Overall Position,Gender Position,Parkrunner,Parkrunner ID,Time,Event Total Participants,Profile URL");
+        // Header (Removed: Event Number, Gender Position, Parkrunner ID)
+        sb.AppendLine("Event Date,Club Name,Event Name,Overall Position,Parkrunner,Time,Event Total Participants,Profile URL");
 
         foreach (var r in records)
         {
@@ -200,11 +200,8 @@ public class ParkrunScraperService
                 EscapeCsv(r.EventDate),
                 EscapeCsv(r.ClubName),
                 EscapeCsv(r.EventName),
-                EscapeCsv(r.EventNumber),
                 EscapeCsv(r.OverallPosition),
-                EscapeCsv(r.GenderPosition),
                 EscapeCsv(r.Parkrunner),
-                EscapeCsv(r.ParkrunnerId),
                 EscapeCsv(r.Time),
                 EscapeCsv(r.EventTotalParticipants),
                 EscapeCsv(r.ProfileUrl)

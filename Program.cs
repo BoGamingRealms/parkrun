@@ -128,11 +128,11 @@ class Program
             {
                 Console.WriteLine("\nPreview of extracted records (first 5):");
                 Console.WriteLine(new string('-', 95));
-                Console.WriteLine($"{"Event Name",-26} | {"Pos",-5} | {"GPos",-5} | {"Parkrunner",-26} | {"Time",-8}");
+                Console.WriteLine($"{"Event Name",-30} | {"Pos",-5} | {"Parkrunner",-26} | {"Time",-8}");
                 Console.WriteLine(new string('-', 95));
                 foreach (var r in records.Take(5))
                 {
-                    Console.WriteLine($"{r.EventName,-26} | {r.OverallPosition,-5} | {r.GenderPosition,-5} | {r.Parkrunner,-26} | {r.Time,-8}");
+                    Console.WriteLine($"{r.EventName,-30} | {r.OverallPosition,-5} | {r.Parkrunner,-26} | {r.Time,-8}");
                 }
                 Console.WriteLine(new string('-', 95));
             }
