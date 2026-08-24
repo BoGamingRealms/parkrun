@@ -129,10 +129,10 @@ public class ParkrunHistoryService
             }
         }
 
-        // Return up to the last 8 weekly snapshots leading up to current date
+        // Return up to the last 10 weekly snapshots leading up to current date
         var recent = allHistory
             .Where(h => string.Compare(h.EventDate, currentDate, StringComparison.OrdinalIgnoreCase) <= 0)
-            .TakeLast(8)
+            .TakeLast(10)
             .ToList();
 
         return (comparison, recent);

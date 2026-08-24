@@ -1,5 +1,54 @@
 [
   {
+    "EventDate": "2026-06-20",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 22,
+    "DistinctEvents": 12,
+    "TotalMembersRegistered": 172
+  },
+  {
+    "EventDate": "2026-06-27",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 25,
+    "DistinctEvents": 14,
+    "TotalMembersRegistered": 174
+  },
+  {
+    "EventDate": "2026-07-04",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 27,
+    "DistinctEvents": 15,
+    "TotalMembersRegistered": 175
+  },
+  {
+    "EventDate": "2026-07-11",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 24,
+    "DistinctEvents": 13,
+    "TotalMembersRegistered": 176
+  },
+  {
+    "EventDate": "2026-07-18",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 30,
+    "DistinctEvents": 17,
+    "TotalMembersRegistered": 178
+  },
+  {
+    "EventDate": "2026-07-25",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 29,
+    "DistinctEvents": 16,
+    "TotalMembersRegistered": 179
+  },
+  {
+    "EventDate": "2026-08-01",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 32,
+    "DistinctEvents": 18,
+    "TotalMembersRegistered": 180
+  },
+  {
     "EventDate": "2026-08-08",
     "ClubName": "Birmingham Swifts",
     "TotalRunners": 31,
