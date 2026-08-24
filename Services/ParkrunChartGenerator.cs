@@ -50,11 +50,11 @@ public class ParkrunChartGenerator
                 rText.LabelFontSize = 9;
                 rText.LabelAlignment = Alignment.LowerCenter;
 
-                var eText = plot.Add.Text($"{history[i].DistinctEvents}", xs[i], eventCounts[i] - 1.2);
+                var eText = plot.Add.Text($"{history[i].DistinctEvents}", xs[i], eventCounts[i] + 1.2);
                 eText.LabelFontColor = Color.FromHex("#00796B");
                 eText.LabelBold = true;
                 eText.LabelFontSize = 9;
-                eText.LabelAlignment = Alignment.UpperCenter;
+                eText.LabelAlignment = Alignment.LowerCenter;
             }
 
             // Format X Axis ticks
