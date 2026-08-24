@@ -161,9 +161,29 @@ public class ParkrunPdfGenerator
                         {
                             chartCol.Item().Row(cr =>
                             {
-                                cr.RelativeItem().Text("Weekly Trends & Participation History").FontSize(10f).Bold().FontColor(Colors.Indigo.Darken3);
+                                cr.RelativeItem().Text("Weekly Trends & Participation History (Last 10 Weeks)").FontSize(10f).Bold().FontColor(Colors.Indigo.Darken3);
                             });
                             chartCol.Item().PaddingTop(4).Border(0.5f).BorderColor(Colors.Grey.Lighten2).Image(trendChartBytes).FitWidth();
+
+                            // Legend Panel positioned below the graph
+                            chartCol.Item().PaddingTop(5).AlignCenter().Row(lr =>
+                            {
+                                lr.Spacing(24);
+
+                                lr.AutoItem().Row(r1 =>
+                                {
+                                    r1.Spacing(4);
+                                    r1.AutoItem().Text("●").FontSize(10).FontColor(Colors.Indigo.Darken3);
+                                    r1.AutoItem().Text("Club Runners").FontSize(8.5f).Bold().FontColor(Colors.Grey.Darken3);
+                                });
+
+                                lr.AutoItem().Row(r2 =>
+                                {
+                                    r2.Spacing(4);
+                                    r2.AutoItem().Text("●").FontSize(10).FontColor(Colors.Teal.Darken2);
+                                    r2.AutoItem().Text("Events Attended").FontSize(8.5f).Bold().FontColor(Colors.Grey.Darken3);
+                                });
+                            });
                         });
                     }
                 });

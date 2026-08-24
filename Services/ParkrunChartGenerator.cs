@@ -81,11 +81,8 @@ public class ParkrunChartGenerator
             plot.Axes.SetLimitsY(minY, maxY);
             plot.Axes.SetLimitsX(-0.5, history.Count - 0.5);
 
-            // Legend
-            plot.ShowLegend(Alignment.UpperRight);
-            plot.Legend.FontSize = 8.5f;
-            plot.Legend.BackgroundColor = Color.FromHex("#FFFFFF");
-            plot.Legend.OutlineColor = Color.FromHex("#E0E0E0");
+            // Hide in-plot legend so it does not obstruct any lines/numbers
+            plot.HideLegend();
 
             return plot.GetImageBytes(width, height, ImageFormat.Png);
         }
