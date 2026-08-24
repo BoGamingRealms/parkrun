@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# VS Code & IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Scraper output CSVs (local output if not in Downloads)
+*.csv
+!sample*.csv
