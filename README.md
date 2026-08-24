@@ -11,18 +11,17 @@ A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated
   - Computes Week-over-Week delta indicators ($\blacktriangle$ / $\blacktriangledown$) on Runners, Events, and Registered Members.
   - Dynamically renders an embedded multi-week participation and attendance trend chart using `ScottPlot`.
 - **PDF Report Layout**:
-  - Club Header with dynamic branding and date subtitle (*Parkrun Club Results*).
-  - Summary metrics cards with week-over-week deltas.
-  - Embedded weekly trend graph.
+  - Official **Birmingham Swifts** graphic logo header with subtitle (*Parkrun Club Results*).
+  - Summary metrics cards (Total Club Runners, Events Attended, Total Registered Members).
   - Multi-page responsive table with alternating row colors.
   - Interactive profile links to parkrunner profiles.
+  - Embedded 10-week historical trend graph at the end of the report.
   - Running footer with page numbering and timestamp.
 - **Detailed Extracted Fields in Report**:
   - `Event Name` (e.g. *Edgbaston Reservoir parkrun*, *Cannon Hill parkrun*)
   - `Overall Position`
   - `Parkrunner` (Runner's Full Name)
   - `Time` (Finish Time)
-  - `Event Finishers`
   - `Profile Link`
 - **Fast & Modern**: Built on .NET 9, `HtmlAgilityPack`, `QuestPDF`, and `ScottPlot`.
 
