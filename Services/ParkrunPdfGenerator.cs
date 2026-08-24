@@ -44,7 +44,7 @@ public class ParkrunPdfGenerator
                 page.PageColor(Colors.White);
                 page.DefaultTextStyle(x => x.FontSize(9).FontColor(Colors.Grey.Darken3));
 
-                // Header
+                // Header (Repeats on each page cleanly)
                 page.Header().Column(column =>
                 {
                     column.Item().Row(row =>
@@ -132,66 +132,70 @@ public class ParkrunPdfGenerator
                         });
                     });
 
-                    // Optional Trend Chart (if multiple weeks of history exist)
-                    if (trendChartBytes != null)
-                    {
-                        column.Item().PaddingTop(2).PaddingBottom(6).Column(chartCol =>
-                        {
-                            chartCol.Item().Row(cr =>
-                            {
-                                cr.RelativeItem().Text("Weekly Trends (Past Weeks)").FontSize(8f).Bold().FontColor(Colors.Grey.Darken2);
-                            });
-                            chartCol.Item().PaddingTop(2).Border(0.5f).BorderColor(Colors.Grey.Lighten2).Image(trendChartBytes).FitWidth();
-                        });
-                    }
-
                     column.Item().PaddingTop(2).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
                 });
 
-                // Content Table
-                page.Content().PaddingTop(8).Table(table =>
+                // Content (Members Table followed by Trends Graph at the end)
+                page.Content().PaddingTop(8).Column(col =>
                 {
-                    table.ColumnsDefinition(columns =>
+                    // Table
+                    col.Item().Table(table =>
                     {
-                        columns.RelativeColumn(3.5f); // Event Name
-                        columns.ConstantColumn(45);   // Pos
-                        columns.RelativeColumn(3.0f); // Runner Name
-                        columns.ConstantColumn(60);   // Time
-                        columns.ConstantColumn(65);   // Total Part.
-                        columns.RelativeColumn(2.5f); // Profile Link
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn(3.5f); // Event Name
+                            columns.ConstantColumn(45);   // Pos
+                            columns.RelativeColumn(3.0f); // Runner Name
+                            columns.ConstantColumn(60);   // Time
+                            columns.ConstantColumn(65);   // Total Part.
+                            columns.RelativeColumn(2.5f); // Profile Link
+                        });
+
+                        // Table Header
+                        table.Header(header =>
+                        {
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Event Name").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Pos").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Parkrunner").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Time").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Finishers").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Profile").Bold().FontColor(Colors.White);
+                        });
+
+                        // Table Rows
+                        for (int i = 0; i < records.Count; i++)
+                        {
+                            var r = records[i];
+                            string bgColor = (i % 2 == 0) ? Colors.White : Colors.Grey.Lighten4;
+
+                            table.Cell().Background(bgColor).Padding(4).Text(r.EventName).FontSize(8.5f);
+                            table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.OverallPosition).FontSize(8.5f).Bold();
+                            table.Cell().Background(bgColor).Padding(4).Text(r.Parkrunner).FontSize(8.5f).Medium();
+                            table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.Time).FontSize(8.5f).Bold().FontColor(Colors.Indigo.Darken2);
+                            table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.EventTotalParticipants).FontSize(8f).FontColor(Colors.Grey.Darken1);
+
+                            if (!string.IsNullOrEmpty(r.ProfileUrl))
+                            {
+                                table.Cell().Background(bgColor).Padding(4).Hyperlink(r.ProfileUrl).Text("View Profile").FontSize(7.5f).FontColor(Colors.Blue.Darken2).Underline();
+                            }
+                            else
+                            {
+                                table.Cell().Background(bgColor).Padding(4).Text("-").FontSize(8f).FontColor(Colors.Grey.Lighten1);
+                            }
+                        }
                     });
 
-                    // Table Header
-                    table.Header(header =>
+                    // Trend Graph Section at the END of the report (after all members)
+                    if (trendChartBytes != null)
                     {
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Event Name").Bold().FontColor(Colors.White);
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Pos").Bold().FontColor(Colors.White);
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Parkrunner").Bold().FontColor(Colors.White);
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Time").Bold().FontColor(Colors.White);
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Finishers").Bold().FontColor(Colors.White);
-                        header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Profile").Bold().FontColor(Colors.White);
-                    });
-
-                    // Table Rows
-                    for (int i = 0; i < records.Count; i++)
-                    {
-                        var r = records[i];
-                        string bgColor = (i % 2 == 0) ? Colors.White : Colors.Grey.Lighten4;
-
-                        table.Cell().Background(bgColor).Padding(4).Text(r.EventName).FontSize(8.5f);
-                        table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.OverallPosition).FontSize(8.5f).Bold();
-                        table.Cell().Background(bgColor).Padding(4).Text(r.Parkrunner).FontSize(8.5f).Medium();
-                        table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.Time).FontSize(8.5f).Bold().FontColor(Colors.Indigo.Darken2);
-                        table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.EventTotalParticipants).FontSize(8f).FontColor(Colors.Grey.Darken1);
-
-                        if (!string.IsNullOrEmpty(r.ProfileUrl))
+                        col.Item().PaddingTop(16).Column(chartCol =>
                         {
-                            table.Cell().Background(bgColor).Padding(4).Hyperlink(r.ProfileUrl).Text("View Profile").FontSize(7.5f).FontColor(Colors.Blue.Darken2).Underline();
-                        }
-                        else
-                        {
-                            table.Cell().Background(bgColor).Padding(4).Text("-").FontSize(8f).FontColor(Colors.Grey.Lighten1);
-                        }
+                            chartCol.Item().Row(cr =>
+                            {
+                                cr.RelativeItem().Text("Weekly Trends & Participation History").FontSize(10f).Bold().FontColor(Colors.Indigo.Darken3);
+                            });
+                            chartCol.Item().PaddingTop(4).Border(0.5f).BorderColor(Colors.Grey.Lighten2).Image(trendChartBytes).FitWidth();
+                        });
                     }
                 });
 
