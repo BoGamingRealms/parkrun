@@ -22,6 +22,7 @@ A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated
   - `Overall Position`
   - `Parkrunner` (Runner's Full Name)
   - `Time` (Finish Time)
+  - `Event Finishers`
   - `Profile Link`
 - **Fast & Modern**: Built on .NET 9, `HtmlAgilityPack`, `QuestPDF`, and `ScottPlot`.
 

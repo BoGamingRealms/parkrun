@@ -121,15 +121,16 @@ public class ParkrunPdfGenerator
                 // Content (Members Table followed by Trends Graph at the end)
                 page.Content().PaddingTop(8).Column(col =>
                 {
-                    // Table (Finishers column removed)
+                    // Table
                     col.Item().Table(table =>
                     {
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.RelativeColumn(4.0f); // Event Name
-                            columns.ConstantColumn(50);   // Pos
-                            columns.RelativeColumn(3.5f); // Runner Name
-                            columns.ConstantColumn(70);   // Time
+                            columns.RelativeColumn(3.5f); // Event Name
+                            columns.ConstantColumn(45);   // Pos
+                            columns.RelativeColumn(3.0f); // Runner Name
+                            columns.ConstantColumn(60);   // Time
+                            columns.ConstantColumn(65);   // Finishers
                             columns.RelativeColumn(2.5f); // Profile Link
                         });
 
@@ -140,6 +141,7 @@ public class ParkrunPdfGenerator
                             header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Pos").Bold().FontColor(Colors.White);
                             header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Parkrunner").Bold().FontColor(Colors.White);
                             header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Time").Bold().FontColor(Colors.White);
+                            header.Cell().Background(Colors.Indigo.Darken3).Padding(5).AlignCenter().Text("Finishers").Bold().FontColor(Colors.White);
                             header.Cell().Background(Colors.Indigo.Darken3).Padding(5).Text("Profile").Bold().FontColor(Colors.White);
                         });
 
@@ -153,6 +155,7 @@ public class ParkrunPdfGenerator
                             table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.OverallPosition).FontSize(8.5f).Bold();
                             table.Cell().Background(bgColor).Padding(4).Text(r.Parkrunner).FontSize(8.5f).Medium();
                             table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.Time).FontSize(8.5f).Bold().FontColor(Colors.Indigo.Darken2);
+                            table.Cell().Background(bgColor).Padding(4).AlignCenter().Text(r.EventTotalParticipants).FontSize(8f).FontColor(Colors.Grey.Darken1);
 
                             if (!string.IsNullOrEmpty(r.ProfileUrl))
                             {
