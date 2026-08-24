@@ -51,7 +51,7 @@ public class ParkrunPdfGenerator
                                 .Bold()
                                 .FontColor(Colors.Indigo.Darken3);
 
-                            titleCol.Item().Text("Parkrun Consolidated Club Results")
+                            titleCol.Item().Text("Parkrun Club Results")
                                 .FontSize(12)
                                 .FontColor(Colors.Grey.Darken1);
                         });
@@ -149,7 +149,7 @@ public class ParkrunPdfGenerator
                     footer.Item().LineHorizontal(0.5f).LineColor(Colors.Grey.Lighten2);
                     footer.Item().PaddingTop(4).Row(row =>
                     {
-                        row.RelativeItem().Text("Parkrun Consolidated Club Results Scraper").FontSize(7.5f).FontColor(Colors.Grey.Medium);
+                        row.RelativeItem();
                         row.AutoItem().Text(text =>
                         {
                             text.Span("Page ").FontSize(7.5f).FontColor(Colors.Grey.Medium);
