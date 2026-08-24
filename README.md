@@ -1,6 +1,6 @@
-# Parkrun Consolidated Club Results Scraper
+# Parkrun Consolidated Club Results Scraper (.NET 9 / C#)
 
-A lightweight Python tool that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for any club and exports the data into a single CSV file directly in your `~/Downloads` folder.
+A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for any club and exports the data into a single CSV file directly in your `~/Downloads` folder.
 
 ---
 
@@ -19,53 +19,53 @@ A lightweight Python tool that scrapes and extracts **Parkrun Consolidated Club 
   - `Time` (Finish Time, formatted)
   - `Event Total Participants`
   - `Profile URL`
-- **Excel-Ready**: Writes UTF-8 with BOM (`utf-8-sig`) so special characters and times render cleanly in Microsoft Excel or Google Sheets.
-- **Zero Heavy Dependencies**: Uses Python standard library by default, with automatic acceleration via `lxml` if present.
+- **Excel-Ready**: Writes UTF-8 with BOM (`utf-8-sig`) so names and finish times render cleanly in Microsoft Excel or Google Sheets.
+- **Fast & Modern**: Built on .NET 9 and `HtmlAgilityPack`.
 
 ---
 
 ## Quick Start
 
-Run the scraper with default club configuration:
+### 1. Run with default configuration:
 ```bash
-python3 scraper.py
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper
 ```
 
-### Specifying Club ID / Name
+### 2. Specifying a Club ID or URL:
 Pass your club's numerical ID or full URL with `-c` or `--club`:
 ```bash
-python3 scraper.py --club 947
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 947
 ```
-Or pass the full parkrun consolidated URL directly:
+Or with full parkrun URL:
 ```bash
-python3 scraper.py --club "https://www.parkrun.com/results/consolidatedclub/?clubNum=947"
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club "https://www.parkrun.com/results/consolidatedclub/?clubNum=947"
 ```
 
-### Specifying a Historical Date
+### 3. Specifying a Historical Date:
 Extract results for a specific weekend event date (`YYYY-MM-DD`):
 ```bash
-python3 scraper.py --club 947 --date 2026-08-22
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 947 --date 2026-08-22
 ```
 
-### Overwriting a Single Constant CSV
+### 4. Overwriting a Single Constant CSV File:
 To overwrite a fixed single file (`~/Downloads/parkrun_consolidated_club_results.csv`) instead of date-stamped files:
 ```bash
-python3 scraper.py --single-file
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --single-file
 ```
 
 ---
 
-## Configuration (`config.json`)
+## Configuration (`appsettings.json`)
 
-You can set your default club number, name, and output directory in [config.json](config.json):
+You can customize the default club number, name, and output directory in [appsettings.json](appsettings.json):
 ```json
 {
-  "default_club_num": "947",
-  "default_club_name": "Ranelagh Harriers",
-  "download_folder": "~/Downloads",
-  "output_filename_pattern": "parkrun_consolidated_{club_slug}_{date}.csv",
-  "single_output_filename": "parkrun_consolidated_club_results.csv",
-  "overwrite_single_file": false
+  "DefaultClubNum": "947",
+  "DefaultClubName": "Ranelagh Harriers",
+  "DownloadFolder": "~/Downloads",
+  "OutputFilenamePattern": "parkrun_consolidated_{0}_{1}.csv",
+  "SingleOutputFilename": "parkrun_consolidated_club_results.csv",
+  "OverwriteSingleFile": false
 }
 ```
 
@@ -73,7 +73,7 @@ You can set your default club number, name, and output directory in [config.json
 
 ## Pushing to GitHub as an Independent Repository
 
-This project is in its own isolated Git repository. To push to a new GitHub repository:
+This project is configured as its own independent Git repository. To push to GitHub:
 
 ```bash
 cd /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper

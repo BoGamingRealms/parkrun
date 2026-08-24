@@ -1,8 +1,0 @@
-{
-  "default_club_num": "947",
-  "default_club_name": "Ranelagh Harriers",
-  "download_folder": "~/Downloads",
-  "output_filename_pattern": "parkrun_consolidated_{club_slug}_{date}.csv",
-  "single_output_filename": "parkrun_consolidated_club_results.csv",
-  "overwrite_single_file": false
-}

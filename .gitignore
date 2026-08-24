@@ -1,19 +1,14 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-.venv/
-
-# VS Code & IDEs
+## .NET & C# ignores
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
 .vscode/
 .idea/
 .DS_Store
 
-# Scraper output CSVs (local output if not in Downloads)
+## CSV outputs (if generated locally)
 *.csv
 !sample*.csv

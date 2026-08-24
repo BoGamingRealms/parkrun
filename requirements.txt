@@ -1,2 +1,0 @@
-# Optional fast HTML parsing library (system Python fallback works automatically without this)
-lxml>=4.9.0
