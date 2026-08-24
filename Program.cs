@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ParkrunScraper.Models;
 using ParkrunScraper.Services;
 
 namespace ParkrunScraper;
@@ -55,6 +56,7 @@ class Program
         string? eventDate = null;
         string? customOutput = null;
         bool singleFileFlag = overwriteSingleFile;
+
         for (int i = 0; i < args.Length; i++)
         {
             string arg = args[i];
@@ -91,14 +93,35 @@ class Program
 
             string effectiveClubName = !string.IsNullOrEmpty(meta.ClubName) ? meta.ClubName : defaultClubName;
             string effectiveDate = !string.IsNullOrEmpty(meta.EventDate) ? meta.EventDate : (eventDate ?? DateTime.UtcNow.ToString("yyyy-MM-dd"));
-            string totalPart = !string.IsNullOrEmpty(meta.TotalParticipants) ? meta.TotalParticipants : records.Count.ToString();
+            int totalRunners = records.Count;
+            int totalEvents = records.Select(r => r.EventName).Distinct().Count();
+            int totalMembers = int.TryParse(meta.TotalMembers, out int tm) ? tm : 0;
 
             Console.WriteLine($"Club Name:                       {effectiveClubName}");
             Console.WriteLine($"Event Date:                      {effectiveDate}");
             Console.WriteLine($"Total Club Members Registered:   {(string.IsNullOrEmpty(meta.TotalMembers) ? "N/A" : meta.TotalMembers)}");
-            Console.WriteLine($"Total Club Runners on Date:      {totalPart}");
-            Console.WriteLine($"Distinct Events Attended:        {records.Select(r => r.EventName).Distinct().Count():N0}");
+            Console.WriteLine($"Total Club Runners on Date:      {totalRunners}");
+            Console.WriteLine($"Distinct Events Attended:        {totalEvents:N0}");
             Console.WriteLine($"Total Runner Records Parsed:     {records.Count:N0}\n");
+
+            // Save Snapshot into History
+            var historyService = new ParkrunHistoryService();
+            historyService.SaveSnapshot(new WeeklyClubSnapshot
+            {
+                EventDate = effectiveDate,
+                ClubName = effectiveClubName,
+                TotalRunners = totalRunners,
+                DistinctEvents = totalEvents,
+                TotalMembersRegistered = totalMembers
+            });
+
+            // Get historical trends and generate chart
+            var (trends, recentHistory) = historyService.GetTrends(effectiveClubName, effectiveDate);
+            byte[]? trendChartBytes = null;
+            if (recentHistory.Count >= 2)
+            {
+                trendChartBytes = ParkrunChartGenerator.GenerateWeeklyTrendChart(recentHistory);
+            }
 
             string destinationPdf;
             if (!string.IsNullOrEmpty(customOutput))
@@ -121,8 +144,8 @@ class Program
                 }
             }
 
-            // Exclusively generate PDF Report
-            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf);
+            // Exclusively generate PDF Report with trend charts & delta indicators
+            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf, trends, trendChartBytes);
 
             if (records.Count > 0)
             {

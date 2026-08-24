@@ -1,0 +1,23 @@
+[
+  {
+    "EventDate": "2026-08-08",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 31,
+    "DistinctEvents": 18,
+    "TotalMembersRegistered": 180
+  },
+  {
+    "EventDate": "2026-08-15",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 34,
+    "DistinctEvents": 21,
+    "TotalMembersRegistered": 182
+  },
+  {
+    "EventDate": "2026-08-22",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 28,
+    "DistinctEvents": 15,
+    "TotalMembersRegistered": 182
+  }
+]
