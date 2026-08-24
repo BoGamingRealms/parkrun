@@ -55,8 +55,6 @@ class Program
         string? eventDate = null;
         string? customOutput = null;
         bool singleFileFlag = overwriteSingleFile;
-        bool exportCsvAlso = false;
-
         for (int i = 0; i < args.Length; i++)
         {
             string arg = args[i];
@@ -75,10 +73,6 @@ class Program
             else if (arg.Equals("--single-file", StringComparison.OrdinalIgnoreCase))
             {
                 singleFileFlag = true;
-            }
-            else if (arg.Equals("--csv", StringComparison.OrdinalIgnoreCase))
-            {
-                exportCsvAlso = true;
             }
             else if (!arg.StartsWith("-"))
             {
@@ -127,14 +121,8 @@ class Program
                 }
             }
 
-            // Generate PDF Report
+            // Exclusively generate PDF Report
             ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf);
-
-            if (exportCsvAlso)
-            {
-                string destinationCsv = Path.ChangeExtension(destinationPdf, ".csv");
-                ParkrunScraperService.SaveToCsv(records, destinationCsv);
-            }
 
             if (records.Count > 0)
             {
