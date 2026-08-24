@@ -1,21 +1,21 @@
 # Parkrun Consolidated Club Results Scraper (.NET 9 / C#)
 
-A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for any club and exports the data into a single CSV file directly in your `~/Downloads` folder.
+A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated Club Results** across all worldwide parkrun events for **Birmingham Swifts (Club #21925)** (or any other club) and exports the data into a single CSV file directly in your `~/Downloads` folder.
 
 ---
 
 ## Features
 
-- **Worldwide Coverage**: Extracts all parkruns attended by your club's members worldwide for a given week.
+- **Worldwide Coverage**: Extracts all parkruns attended by Birmingham Swifts members worldwide for a given week.
 - **Detailed Extracted Fields**:
   - `Event Date`
   - `Club Name`
-  - `Event Name` (e.g. *Richmond parkrun*)
-  - `Event Number` (e.g. *#929*)
+  - `Event Name` (e.g. *Edgbaston Reservoir parkrun*, *Cannon Hill parkrun*)
+  - `Event Number` (e.g. *#243*)
   - `Overall Position`
   - `Gender Position`
   - `Parkrunner` (Runner's Full Name)
-  - `Parkrunner ID` (e.g. *4662650*)
+  - `Parkrunner ID` (e.g. *7987337*)
   - `Time` (Finish Time, formatted)
   - `Event Total Participants`
   - `Profile URL`
@@ -26,25 +26,25 @@ A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated
 
 ## Quick Start
 
-### 1. Run with default configuration:
+### 1. Run with default configuration (Birmingham Swifts - Club #21925):
 ```bash
 dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper
 ```
 
-### 2. Specifying a Club ID or URL:
-Pass your club's numerical ID or full URL with `-c` or `--club`:
+### 2. Specifying a Different Club ID or URL:
+Pass another club's numerical ID or full URL with `-c` or `--club`:
 ```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 947
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 21925
 ```
 Or with full parkrun URL:
 ```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club "https://www.parkrun.com/results/consolidatedclub/?clubNum=947"
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club "https://www.parkrun.com/results/consolidatedclub/?clubNum=21925"
 ```
 
 ### 3. Specifying a Historical Date:
 Extract results for a specific weekend event date (`YYYY-MM-DD`):
 ```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --club 947 --date 2026-08-22
+dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --date 2026-08-22
 ```
 
 ### 4. Overwriting a Single Constant CSV File:
@@ -57,11 +57,11 @@ dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scrap
 
 ## Configuration (`appsettings.json`)
 
-You can customize the default club number, name, and output directory in [appsettings.json](appsettings.json):
+Pre-configured for Birmingham Swifts in [appsettings.json](appsettings.json):
 ```json
 {
-  "DefaultClubNum": "947",
-  "DefaultClubName": "Ranelagh Harriers",
+  "DefaultClubNum": "21925",
+  "DefaultClubName": "Birmingham Swifts",
   "DownloadFolder": "~/Downloads",
   "OutputFilenamePattern": "parkrun_consolidated_{0}_{1}.csv",
   "SingleOutputFilename": "parkrun_consolidated_club_results.csv",
