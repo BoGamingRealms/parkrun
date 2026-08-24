@@ -27,8 +27,8 @@ class Program
         string defaultClubNum = "21925";
         string defaultClubName = "Birmingham Swifts";
         string downloadFolder = "~/Downloads";
-        string outputPattern = "parkrun_consolidated_{0}_{1}.pdf";
-        string singleOutputFilename = "parkrun_consolidated_club_results.pdf";
+        string outputPattern = "parkrun_{0}_{1}.pdf";
+        string singleOutputFilename = "parkrun_club_results.pdf";
         bool overwriteSingleFile = false;
 
         if (File.Exists(configPath))

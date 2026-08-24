@@ -59,8 +59,8 @@ Pre-configured for Birmingham Swifts in [appsettings.json](appsettings.json):
   "DefaultClubNum": "21925",
   "DefaultClubName": "Birmingham Swifts",
   "DownloadFolder": "~/Downloads",
-  "OutputFilenamePattern": "parkrun_consolidated_{0}_{1}.pdf",
-  "SingleOutputFilename": "parkrun_consolidated_club_results.pdf",
+  "OutputFilenamePattern": "parkrun_{0}_{1}.pdf",
+  "SingleOutputFilename": "parkrun_club_results.pdf",
   "OverwriteSingleFile": false
 }
 ```
