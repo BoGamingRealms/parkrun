@@ -15,7 +15,7 @@ A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated
   - Summary metrics cards (Total Club Runners, Events Attended, Total Registered Members).
   - Multi-page responsive table with alternating row colors.
   - Interactive profile links to parkrunner profiles.
-  - Embedded 10-week historical trend graph at the end of the report.
+  - Embedded 15-week historical trend graph at the end of the report.
   - Running footer with page numbering and timestamp.
 - **Detailed Extracted Fields in Report**:
   - `Event Name` (e.g. *Edgbaston Reservoir parkrun*, *Cannon Hill parkrun*)

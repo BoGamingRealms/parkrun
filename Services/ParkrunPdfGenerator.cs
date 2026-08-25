@@ -175,7 +175,7 @@ public class ParkrunPdfGenerator
                         {
                             chartCol.Item().Row(cr =>
                             {
-                                cr.RelativeItem().Text("Weekly Trends & Participation History (Last 10 Weeks)").FontSize(10f).Bold().FontColor(Colors.Indigo.Darken3);
+                                cr.RelativeItem().Text("Weekly Trends & Participation History (Last 15 Weeks)").FontSize(10f).Bold().FontColor(Colors.Indigo.Darken3);
                             });
                             chartCol.Item().PaddingTop(4).Border(0.5f).BorderColor(Colors.Grey.Lighten2).Image(trendChartBytes).FitWidth();
 

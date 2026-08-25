@@ -30,15 +30,15 @@ public class ParkrunChartGenerator
             // Line 1: Runners
             var runnerLine = plot.Add.Scatter(xs, runnerCounts);
             runnerLine.Color = Color.FromHex("#283593"); // Deep Indigo
-            runnerLine.LineWidth = 2.5f;
-            runnerLine.MarkerSize = 7;
+            runnerLine.LineWidth = 2.2f;
+            runnerLine.MarkerSize = 6;
             runnerLine.LegendText = "Runners";
 
             // Line 2: Events
             var eventLine = plot.Add.Scatter(xs, eventCounts);
             eventLine.Color = Color.FromHex("#00796B"); // Deep Teal
-            eventLine.LineWidth = 2.5f;
-            eventLine.MarkerSize = 7;
+            eventLine.LineWidth = 2.2f;
+            eventLine.MarkerSize = 6;
             eventLine.LegendText = "Events";
 
             // Add value markers on data points
@@ -47,13 +47,13 @@ public class ParkrunChartGenerator
                 var rText = plot.Add.Text($"{history[i].TotalRunners}", xs[i], runnerCounts[i] + 1.2);
                 rText.LabelFontColor = Color.FromHex("#283593");
                 rText.LabelBold = true;
-                rText.LabelFontSize = 9;
+                rText.LabelFontSize = 8;
                 rText.LabelAlignment = Alignment.LowerCenter;
 
                 var eText = plot.Add.Text($"{history[i].DistinctEvents}", xs[i], eventCounts[i] + 1.2);
                 eText.LabelFontColor = Color.FromHex("#00796B");
                 eText.LabelBold = true;
-                eText.LabelFontSize = 9;
+                eText.LabelFontSize = 8;
                 eText.LabelAlignment = Alignment.LowerCenter;
             }
 
@@ -69,10 +69,10 @@ public class ParkrunChartGenerator
                 ticks[i] = new Tick(i, label);
             }
             plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
-            plot.Axes.Bottom.TickLabelStyle.FontSize = 8.5f;
+            plot.Axes.Bottom.TickLabelStyle.FontSize = 7.5f;
             plot.Axes.Bottom.TickLabelStyle.ForeColor = Color.FromHex("#424242");
 
-            plot.Axes.Left.TickLabelStyle.FontSize = 8f;
+            plot.Axes.Left.TickLabelStyle.FontSize = 7.5f;
             plot.Axes.Left.TickLabelStyle.ForeColor = Color.FromHex("#757575");
 
             // Expand Y limits slightly so numbers don't clip
