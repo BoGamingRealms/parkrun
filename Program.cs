@@ -72,14 +72,18 @@ class Program
             {
                 customOutput = args[++i];
             }
-            else if (arg.Equals("--single-file", StringComparison.OrdinalIgnoreCase))
-            {
-                singleFileFlag = true;
-            }
             else if (!arg.StartsWith("-"))
             {
                 clubInput = arg;
             }
+        }
+
+        if (string.IsNullOrEmpty(eventDate))
+        {
+            DateTime now = DateTime.UtcNow.Date;
+            int diff = (7 + ((int)now.DayOfWeek - (int)DayOfWeek.Saturday)) % 7;
+            DateTime mostRecentSaturday = now.AddDays(-diff);
+            eventDate = mostRecentSaturday.ToString("yyyy-MM-dd");
         }
 
         var scraperService = new ParkrunScraperService();
