@@ -84,6 +84,16 @@ public class ParkrunHistoryService
 
         string json = JsonSerializer.Serialize(history, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(_historyFilePath, json);
+
+        try
+        {
+            string projectDataDir = Path.Combine(Directory.GetCurrentDirectory(), "data", "history.json");
+            if (File.Exists(projectDataDir) && !string.Equals(Path.GetFullPath(projectDataDir), Path.GetFullPath(_historyFilePath), StringComparison.OrdinalIgnoreCase))
+            {
+                File.WriteAllText(projectDataDir, json);
+            }
+        }
+        catch { }
     }
 
     public (TrendComparison Comparison, List<WeeklyClubSnapshot> RecentHistory) GetTrends(string clubName, string currentDate)

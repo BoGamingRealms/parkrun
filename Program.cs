@@ -127,6 +127,19 @@ class Program
                 trendChartBytes = ParkrunChartGenerator.GenerateWeeklyTrendChart(recentHistory);
             }
 
+            // Track Member Volunteering for this specific week across attended events
+            Console.WriteLine("Fetching member volunteering for this specific week across attended events...");
+            var volunteerService = new ParkrunVolunteerService();
+            var volunteerProfiles = await volunteerService.GetWeeklyEventVolunteersAsync(
+                meta.EventResultUrls,
+                effectiveClubName,
+                effectiveDate);
+
+            int totalVolCredits = volunteerProfiles.Sum(v => v.TotalCredits);
+            int activeVolunteers = volunteerProfiles.Count;
+            int milestoneHolders = volunteerProfiles.Count(v => !string.IsNullOrEmpty(v.HighestMilestone) && v.HighestMilestone != "-");
+            Console.WriteLine($"Volunteering (This Week):        {activeVolunteers} members volunteered ({totalVolCredits:N0} combined lifetime credits, {milestoneHolders} milestone achievers)\n");
+
             string destinationPdf;
             if (!string.IsNullOrEmpty(customOutput))
             {
@@ -148,8 +161,8 @@ class Program
                 }
             }
 
-            // Exclusively generate PDF Report with trend charts at the end
-            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf, trendChartBytes);
+            // Generate PDF Report with weekly volunteers section and trend chart
+            ParkrunPdfGenerator.GeneratePdf(meta, records, destinationPdf, trendChartBytes, volunteerProfiles);
 
             if (records.Count > 0)
             {
@@ -162,6 +175,20 @@ class Program
                     Console.WriteLine($"{r.EventName,-30} | {r.OverallPosition,-5} | {r.Parkrunner,-26} | {r.Time,-8}");
                 }
                 Console.WriteLine(new string('-', 95));
+            }
+
+            if (volunteerProfiles.Count > 0)
+            {
+                Console.WriteLine("\nVolunteers of the Week:");
+                Console.WriteLine(new string('-', 110));
+                Console.WriteLine($"{"Parkrunner",-24} | {"Event",-24} | {"Role This Week",-34} | {"Credits",-7} | {"Milestone",-9}");
+                Console.WriteLine(new string('-', 110));
+                foreach (var v in volunteerProfiles)
+                {
+                    string cleanEvent = v.EventName.Replace(" parkrun", "", StringComparison.OrdinalIgnoreCase).Trim();
+                    Console.WriteLine($"{v.ParkrunnerName,-24} | {cleanEvent,-24} | {v.RoleThisWeek,-34} | {v.TotalCredits,-7} | {v.HighestMilestone,-9}");
+                }
+                Console.WriteLine(new string('-', 110));
             }
 
             Console.WriteLine("\nExtraction completed successfully!");

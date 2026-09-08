@@ -60,8 +60,51 @@ public class ParkrunScraperService
 
     public async Task<(ConsolidatedReportMetadata Metadata, List<ParkrunRecord> Records)> ScrapeConsolidatedClubAsync(string clubNumOrUrl, string? eventDate = null)
     {
-        string url = BuildUrl(clubNumOrUrl, eventDate);
-        string html = await _httpClient.GetStringAsync(url);
+        string html = "";
+        string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data");
+        if (!Directory.Exists(dataDir)) Directory.CreateDirectory(dataDir);
+
+        if (File.Exists(clubNumOrUrl))
+        {
+            Console.WriteLine($"[Info] Loading club report from local file: {clubNumOrUrl}");
+            html = await File.ReadAllTextAsync(clubNumOrUrl);
+        }
+        else
+        {
+            var match = Regex.Match(clubNumOrUrl, @"\d+");
+            string clubNum = match.Success ? match.Value : "club";
+            string cacheFileName = $"cache_{clubNum}_{eventDate ?? "latest"}.html";
+            string cachePath = Path.Combine(dataDir, cacheFileName);
+
+            string url = BuildUrl(clubNumOrUrl, eventDate);
+            try
+            {
+                html = await _httpClient.GetStringAsync(url);
+                if (html.Contains("Amazon WAF", StringComparison.OrdinalIgnoreCase) ||
+                    html.Contains("x-amzn-waf", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (File.Exists(cachePath))
+                    {
+                        Console.WriteLine($"[Warning] Parkrun WAF captcha encountered; falling back to cached file: {cachePath}");
+                        html = await File.ReadAllTextAsync(cachePath);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Parkrun WAF captcha encountered and no local cached report exists.");
+                    }
+                }
+                else
+                {
+                    // Cache the successful download
+                    await File.WriteAllTextAsync(cachePath, html);
+                }
+            }
+            catch (Exception ex) when (File.Exists(cachePath))
+            {
+                Console.WriteLine($"[Warning] Network request failed ({ex.Message}); falling back to cached file: {cachePath}");
+                html = await File.ReadAllTextAsync(cachePath);
+            }
+        }
 
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
@@ -120,6 +163,16 @@ public class ParkrunScraperService
 
                         var evMatch = Regex.Match(pText, @"event #(\d+)", RegexOptions.IgnoreCase);
                         if (evMatch.Success) eventNumber = evMatch.Groups[1].Value;
+
+                        var aEvent = sibling.SelectSingleNode(".//a");
+                        if (aEvent != null)
+                        {
+                            string fullUrl = aEvent.GetAttributeValue("href", "");
+                            if (!string.IsNullOrEmpty(fullUrl) && fullUrl.Contains("/results/"))
+                            {
+                                meta.EventResultUrls[eventName] = fullUrl;
+                            }
+                        }
                     }
                     else if (sibling.Name.Equals("table", StringComparison.OrdinalIgnoreCase))
                     {

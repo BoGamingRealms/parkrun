@@ -21,4 +21,5 @@ public class ConsolidatedReportMetadata
     public string EventDate { get; set; } = string.Empty;
     public string TotalMembers { get; set; } = string.Empty;
     public string TotalParticipants { get; set; } = string.Empty;
+    public Dictionary<string, string> EventResultUrls { get; set; } = new();
 }

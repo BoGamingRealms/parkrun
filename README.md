@@ -8,22 +8,15 @@ A C# .NET 9 console application that scrapes and extracts **Parkrun Consolidated
 
 - **Weekly Trend Tracking & Graphing**:
   - Automatically records historical weekly stats in `data/history.json`.
-  - Computes Week-over-Week delta indicators ($\blacktriangle$ / $\blacktriangledown$) on Runners, Events, and Registered Members.
   - Dynamically renders an embedded multi-week participation and attendance trend chart using `ScottPlot`.
-- **PDF Report Layout**:
-  - Official **Birmingham Swifts** graphic logo header with subtitle (*Parkrun Club Results*).
-  - Summary metrics cards (Total Club Runners, Events Attended, Total Registered Members).
-  - Multi-page responsive table with alternating row colors.
-  - Interactive profile links to parkrunner profiles.
-  - Embedded 15-week historical trend graph at the end of the report.
-  - Running footer with page numbering and timestamp.
-- **Detailed Extracted Fields in Report**:
-  - `Event Name` (e.g. *Edgbaston Reservoir parkrun*, *Cannon Hill parkrun*)
-  - `Overall Position`
-  - `Parkrunner` (Runner's Full Name)
-  - `Time` (Finish Time)
-  - `Event Finishers`
-  - `Profile Link`
+- **Weekly Club Volunteers & Event Rosters**:
+  - Automatically scrapes event-level volunteer rosters across all attended parkruns to capture both running and non-running volunteers (e.g. Run Directors, Marshals, Timekeepers).
+  - Displays exclusively the active volunteers for that specific weekend.
+  - Details their assigned role(s) that week, event attended, official milestone badges (`V25`, `V50`, `V100`, `V250`), and lifetime volunteer credits.
+  - Caches profiles in `data/volunteers.json` for fast, rate-limit-resilient generation.
+- **Clean 2-Page Standard Report**:
+  - **Page 1**: Club Runners Table with enlarged typography (13pt headers, 13pt pos, 13pt runner, 13pt time, 15pt finishers, 11.5pt event). Interactive hyperlinks on runner names.
+  - **Page 2**: Weekly Trends Graph, Weekly Volunteers Table (13pt/15pt typography), and Celebrating Our Volunteers appreciation banner (13pt).
 - **Fast & Modern**: Built on .NET 9, `HtmlAgilityPack`, `QuestPDF`, and `ScottPlot`.
 
 ---
@@ -45,12 +38,6 @@ dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scrap
 Extract results for a specific weekend event date (`YYYY-MM-DD`):
 ```bash
 dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --date 2026-08-22
-```
-
-### 4. Also Exporting a CSV File:
-Pass `--csv` to generate both a PDF and a CSV file simultaneously:
-```bash
-dotnet run --project /Users/bowang/.gemini/antigravity-ide/scratch/parkrun-scraper -- --csv
 ```
 
 ---

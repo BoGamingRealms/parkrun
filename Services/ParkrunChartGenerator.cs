@@ -8,7 +8,7 @@ namespace ParkrunScraper.Services;
 
 public class ParkrunChartGenerator
 {
-    public static byte[]? GenerateWeeklyTrendChart(List<WeeklyClubSnapshot> history, int width = 520, int height = 140)
+    public static byte[]? GenerateWeeklyTrendChart(List<WeeklyClubSnapshot> history, int width = 520, int height = 115)
     {
         if (history == null || history.Count < 2)
         {

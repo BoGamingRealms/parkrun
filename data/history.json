@@ -103,5 +103,19 @@
     "TotalRunners": 28,
     "DistinctEvents": 15,
     "TotalMembersRegistered": 182
+  },
+  {
+    "EventDate": "2026-08-29",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 29,
+    "DistinctEvents": 15,
+    "TotalMembersRegistered": 187
+  },
+  {
+    "EventDate": "2026-09-05",
+    "ClubName": "Birmingham Swifts",
+    "TotalRunners": 32,
+    "DistinctEvents": 19,
+    "TotalMembersRegistered": 188
   }
 ]

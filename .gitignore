@@ -9,6 +9,7 @@ obj/
 .idea/
 .DS_Store
 
-## CSV outputs (if generated locally)
-*.csv
-!sample*.csv
+## Scraped HTML Caches
+data/*.html
+data/events_*/
+
