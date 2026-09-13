@@ -487,9 +487,9 @@
         "parkwalker": 1
       },
       "TopRolesSummary": "Marshal (11), Barcode Scanning (11), Finish Tokens (5)",
-      "EventName": "",
-      "RoleThisWeek": "",
-      "VolunteeredThisWeek": false,
+      "EventName": "Edgbaston Reservoir parkrun",
+      "RoleThisWeek": "Finish Tokens",
+      "VolunteeredThisWeek": true,
       "LastFetched": "2026-09-08T08:10:27.973794Z",
       "DeltaCredits": 0
     },
@@ -642,7 +642,7 @@
       },
       "TopRolesSummary": "Timekeeper (11), Marshal (10), Barcode Scanning (8)",
       "EventName": "Edgbaston Reservoir parkrun",
-      "RoleThisWeek": "Timekeeper",
+      "RoleThisWeek": "Marshal",
       "VolunteeredThisWeek": true,
       "LastFetched": "2026-09-08T08:30:00Z",
       "DeltaCredits": 0
@@ -694,8 +694,8 @@
         "Volunteer Co-ordinator": 66
       },
       "TopRolesSummary": "Run Director (88), Barcode Scanning (80), Volunteer Co-ordinator (66)",
-      "EventName": "Cannon Hill parkrun, Birmingham",
-      "RoleThisWeek": "Barcode Scanning",
+      "EventName": "Edgbaston Reservoir parkrun",
+      "RoleThisWeek": "First Timers Welcome, Barcode Scanning",
       "VolunteeredThisWeek": true,
       "LastFetched": "2026-09-08T08:30:00Z",
       "DeltaCredits": 0
@@ -736,6 +736,23 @@
       "RoleThisWeek": "Marshal",
       "VolunteeredThisWeek": true,
       "LastFetched": "2026-09-08T08:30:00Z",
+      "DeltaCredits": 0
+    },
+    "3440988": {
+      "ParkrunnerId": "3440988",
+      "ParkrunnerName": "Thomas GLAVE",
+      "TotalCredits": 5,
+      "HighestMilestone": "-",
+      "Milestones": [],
+      "Roles": {
+        "Funnel Manager": 2,
+        "Tail Walker": 3
+      },
+      "TopRolesSummary": "Tail Walker (3), Funnel Manager (2)",
+      "EventName": "Edgbaston Reservoir parkrun",
+      "RoleThisWeek": "Tail Walker",
+      "VolunteeredThisWeek": true,
+      "LastFetched": "2026-09-13T06:02:23.835702Z",
       "DeltaCredits": 0
     }
   },
@@ -780,6 +797,14 @@
       "1846361": 316,
       "2302494": 211,
       "4722916": 18
+    },
+    "2026-09-12": {
+      "131510": 187,
+      "1846361": 316,
+      "7221119": 33,
+      "7376147": 1,
+      "3440988": 5,
+      "4856576": 33
     }
   }
 }

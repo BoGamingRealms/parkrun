@@ -213,7 +213,7 @@ public class ParkrunPdfGenerator
                         int totalVolCredits = volunteerProfiles.Sum(v => v.TotalCredits);
                         int milestoneHolders = volunteerProfiles.Count(v => !string.IsNullOrEmpty(v.HighestMilestone) && v.HighestMilestone != "-");
 
-                        col.Item().PaddingTop(8).Column(volCol =>
+                        col.Item().ShowEntire().PaddingTop(8).Column(volCol =>
                         {
                             // Section Header
                             volCol.Item().Row(vr =>
