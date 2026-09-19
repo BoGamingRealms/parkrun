@@ -412,9 +412,9 @@
         "Pacer (5k only)": 2
       },
       "TopRolesSummary": "Barcode Scanning (2), Pacer (5k only) (2), Finish Tokens (1)",
-      "EventName": "",
-      "RoleThisWeek": "",
-      "VolunteeredThisWeek": false,
+      "EventName": "Edgbaston Reservoir parkrun",
+      "RoleThisWeek": "Barcode Scanning",
+      "VolunteeredThisWeek": true,
       "LastFetched": "2026-09-08T08:10:27.869857Z",
       "DeltaCredits": 0
     },
@@ -805,6 +805,9 @@
       "7376147": 1,
       "3440988": 5,
       "4856576": 33
+    },
+    "2026-09-19": {
+      "3304122": 5
     }
   }
 }
