@@ -72,7 +72,7 @@ public class ParkrunVolunteerService
                 eventUrl = "https://www.parkrun.org.uk" + (eventUrl.StartsWith("/") ? "" : "/") + eventUrl;
             }
 
-            var mUrl = Regex.Match(eventUrl, @"parkrun\.org\.uk/([^/]+)/results/(\d+)");
+            var mUrl = Regex.Match(eventUrl, @"parkrun\.[a-z\.]+/([^/]+)/results/(\d+)");
             string slug = mUrl.Success ? mUrl.Groups[1].Value : Regex.Replace(eventName, @"[^a-zA-Z0-9]", "_").ToLowerInvariant();
             string num = mUrl.Success ? mUrl.Groups[2].Value : "latest";
             string cachePath = Path.Combine(cacheBaseDir, $"{slug}_{num}.html");

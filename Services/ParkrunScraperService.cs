@@ -151,9 +151,9 @@ public class ParkrunScraperService
                 string totalEventParticipants = "";
                 HtmlNode? tableNode = null;
 
-                // Traverse sibling elements following this h2 until next h2
+                // Traverse sibling elements following this h2 until next h2 or h1
                 var sibling = h2.NextSibling;
-                while (sibling != null && !sibling.Name.Equals("h2", StringComparison.OrdinalIgnoreCase))
+                while (sibling != null && !sibling.Name.Equals("h2", StringComparison.OrdinalIgnoreCase) && !sibling.Name.Equals("h1", StringComparison.OrdinalIgnoreCase))
                 {
                     if (sibling.Name.Equals("p", StringComparison.OrdinalIgnoreCase))
                     {
@@ -168,7 +168,7 @@ public class ParkrunScraperService
                         if (aEvent != null)
                         {
                             string fullUrl = aEvent.GetAttributeValue("href", "");
-                            if (!string.IsNullOrEmpty(fullUrl) && fullUrl.Contains("/results/"))
+                            if (!string.IsNullOrEmpty(fullUrl) && fullUrl.Contains("/results/") && !fullUrl.Contains("/consolidatedclub/"))
                             {
                                 meta.EventResultUrls[eventName] = fullUrl;
                             }
